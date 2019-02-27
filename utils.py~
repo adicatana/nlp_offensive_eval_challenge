@@ -210,6 +210,23 @@ def parse_dataset_task_b(filename):
     train_labels_b = [0 if row['subtask_b'] == 'UNT' else 1 for row in train]
     return train_corpus, train_labels_b
 
+def parse_dataset_task_c(filename):
+    rows = read_csv(filename)
+    train = [row for row in rows if row['subtask_c'] != 'NULL']
+    train_corpus = [translate(row['tweet'].lower()).lower() for row in train]
+
+    train_labels_c = []
+    for row in train:
+        if row['subtask_c'] == 'IND':
+            train_labels_c.append(0)
+        elif row['subtask_c'] == 'GRP':
+            train_labels_c.append(1):
+        else:
+            train_labels_c.append(2);
+
+    return train_corpus, train_labels_c
+
+
 def parse_dataset_t_b(filename):
     rows = read_csv(filename)
     train = [row for row in rows if row['subtask_b'] != 'NULL']
