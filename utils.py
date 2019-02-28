@@ -61,13 +61,15 @@ def train_model(model, optimizer, loss_fn, feature_train, target_train, feature_
 
 #--------------------------- ACCURACY -----------------------------------------
 def accuracy(output, target):
-    output = torch.round(torch.sigmoid(output))
+    # output = torch.round(torch.sigmoid(output))
+    output = torch.nn.functional.log_softmax(output).max(dim = 1)[1]
     correct = (output == target).float()
     acc = correct.sum() / len(correct) 
     return acc    
 
 def f_measure(output, gold):  
-    pred = torch.round(torch.sigmoid(output))
+    # pred = torch.round(torch.sigmoid(output))
+    pred = torch.nn.functional.log_softmax(output).max(dim = 1)[1]
     pred = pred.detach().cpu().numpy()
 
     test_pos_preds = np.sum(pred)

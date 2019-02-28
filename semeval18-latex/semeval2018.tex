@@ -65,9 +65,11 @@ In Natural Language Processing (NLP), classical methods required manual feature 
 
 %Discussion about the data and the datasets, no. of examples in each class
 
-The gievn dataset from the competition starting kit contains 13200 tweets: 4400 of them are marked as offensive and 8800 are not offensive. The offensive ones are further split for task B into 524 untargeted and 3876 targeted. Finally the targeted ones are divided for task C into: ...
+The gievn dataset from the competition starting kit contains 13240 tweets: 4400 of them are marked as offensive and 8840 are not offensive. The offensive ones are further split for task B into 524 untargeted and 3876 targeted. Finally the targeted ones are divided for task C into: ...
 
-We have used the holdout method to split these tweets into a training set 8712 and a validation set comprising the remaining examples. After we report the results of our validation experiments, we train the classifiers on the entire dataset before submission.
+We have used the holdout method to split these tweets into a training set 8712 and a validation set comprising the remaining examples. 
+
+TODO: After we report the results of our validation experiments, we train the classifiers on the entire dataset before submission.
 
 As a small test set we have parsed an additional file present in the starting kit to construct a dataset of 320 tweets.
 
@@ -81,6 +83,8 @@ From the above ratios, we see that the number of examples from each class are no
     \item increasing the number of untargeted sample by taking an untargeted tweet and duplicating it as another test instance
     \item Maybe augment for C?
 \end{itemize}
+
+TODO: explain augmentation after split - risk to have data in validation
 
 \subsection{Stemming}
 
@@ -130,7 +134,46 @@ They are suited for language tasks because they take into account the whole inpu
 
 \section{Results}
 
+Below we present our best runs for the algorithms at each individual task.
+
 \subsection{Validation Experiments}
+
+100 epochs
+
+\begin{table*}[t]
+\begin{center}
+\begin{tabular}{|c|cccc|}
+\hline \bf Task A & \bf baseline & \bf stemming & \bf lemmatization & \\ \hline
+Random Forest & Test Acc: 72.81\% & Test Acc: 70.31\% & Test Acc: 75.31\% & \\ \hline
+CNN & \shortstack{Test Acc: 82.50\% \\ F1-measure: 0.49}  & \shortstack{Test Acc: 85.94\% \\ F1-measure: 0.65} & \shortstack{Test Acc: 81.25\% \\ F1-measure: 0.41} & \\ \hline
+LSTM & bold & bold & bold & \\
+\hline
+\end{tabular}
+\end{center}
+\caption{\label{font-table} Task A experimentation results. }
+\end{table*}
+
+RF results will predict only one label
+CNN with data augmentation, split, stemming:
+ Epoch: 99 | Train Loss: 0.528 | Train Acc: 73.72\% | Val. Loss: 0.555 | Val. Acc: 71.25\% |
+| Test Loss: 0.583 | Test Acc: 67.19\%
+58
+Test: Recall: 0.75, Precision: 0.40, F1-measure: 0.52
+
+80 epochs
+
+\begin{table*}[t]
+\begin{center}
+\begin{tabular}{|c|cccc|}
+\hline \bf Task B & \bf baseline & \bf stemming & \bf lemmatization & \\ \hline
+Random Forest & Test Acc: 53.24\% & Test Acc: 51.94\% & Test Acc: 53.24\% & \\ \hline
+CNN & \shortstack{Test Acc: 68.83\% \\ F1-measure: 0.74}  & \shortstack{Test Acc: 58.44\% \\ F1-measure: 0.67} & \shortstack{Test Acc: 63.64\% \\ F-measure: 0.70} & \\ \hline
+LSTM & bold & bold & bold & \\
+\hline
+\end{tabular}
+\end{center}
+\caption{\label{font-table} Task B experimentation results.}
+\end{table*}
 
 \subsection{Submission Results}
 
