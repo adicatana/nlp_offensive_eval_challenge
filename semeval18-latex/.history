@@ -1,0 +1,22 @@
+2018-01-24.12-58-30.jonmay.isi.edu unzip naaclhlt2018-latex.zip 
+2018-01-24.12-58-32.jonmay.isi.edu ls
+2018-01-24.12-58-35.jonmay.isi.edu open naaclhlt2018.pdf 
+2018-01-24.13-02-55.jonmay.isi.edu ls
+2018-01-24.13-08-41.jonmay.isi.edu ls
+2018-01-24.13-08-53.jonmay.isi.edu rm naaclhlt2018.tex
+2018-01-24.13-08-55.jonmay.isi.edu ls
+2018-01-24.13-08-58.jonmay.isi.edu rm naaclhlt2018-latex.zip 
+2018-01-24.13-09-01.jonmay.isi.edu ls
+2018-01-24.13-09-07.jonmay.isi.edu rm naaclhlt2018.pdf 
+2018-01-24.13-09-10.jonmay.isi.edu ls
+2018-01-24.13-09-17.jonmay.isi.edu pdflatex semeval2018
+2018-01-24.13-09-18.jonmay.isi.edu pdflatex semeval2018
+2018-01-24.13-09-22.jonmay.isi.edu bibtex semeval2018
+2018-01-24.13-09-24.jonmay.isi.edu pdflatex semeval2018
+2018-01-24.13-09-25.jonmay.isi.edu pdflatex semeval2018
+2018-01-24.13-09-27.jonmay.isi.edu pdflatex semeval2018
+2018-01-24.13-09-32.jonmay.isi.edu open semeval2018.pdf 
+2018-01-24.13-11-19.jonmay.isi.edu ls
+2018-01-24.13-11-33.jonmay.isi.edu rm *out *log *blg *bbl *aux
+2018-01-24.13-11-33.jonmay.isi.edu ls
+2018-01-24.13-11-46.jonmay.isi.edu rm semeval2018.tex~
