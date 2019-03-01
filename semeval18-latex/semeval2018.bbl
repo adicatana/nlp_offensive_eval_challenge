@@ -1,18 +1,88 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{13}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
 
-\bibitem{RF}
-L.~Breiman, ``Random forests,'' {\em Mach. Learn.}, vol.~45, pp.~5--32, Oct.
-  2001.
+\bibitem[{Davidson} et~al.(2017){Davidson}, {Warmsley}, {Macy}, and
+  {Weber}]{Davidson}
+Thomas {Davidson}, Dana {Warmsley}, Michael {Macy}, and Ingmar {Weber}.
+\newblock {Automated Hate Speech Detection and the Problem of Offensive
+  Language}.
+\newblock \emph{arXiv e-prints}, art. arXiv:1703.04009, Mar 2017.
 
-\bibitem{pytorch}
-``Pytorch.''
+\bibitem[{Malmasi} and {Zampieri}(2017)]{Malmasi}
+Shervin {Malmasi} and Marcos {Zampieri}.
+\newblock {Detecting Hate Speech in Social Media}.
+\newblock \emph{arXiv e-prints}, art. arXiv:1712.06427, Dec 2017.
 
-\bibitem{adam}
-D.~P. Kingma and J.~Ba, ``Adam: {A} method for stochastic optimization,'' {\em
-  CoRR}, vol.~abs/1412.6980, 2014.
+\bibitem[Gaydhani et~al.(2018)Gaydhani, Doma, Kendre, and Bhagwat]{preproc}
+Aditya Gaydhani, Vikrant Doma, Shrikant Kendre, and Laxmi Bhagwat.
+\newblock Detecting hate speech and offensive language on twitter using machine
+  learning: An n-gram and {TFIDF} based approach.
+\newblock \emph{CoRR}, abs/1809.08651, 2018.
+\newblock URL \url{http://arxiv.org/abs/1809.08651}.
 
-\bibitem{lstm}
-S.~Hochreiter and J.~Schmidhuber, ``Long short-term memory,'' {\em Neural
-  Comput.}, vol.~9, pp.~1735--1780, Nov. 1997.
+\bibitem[{Badjatiya} et~al.(2017){Badjatiya}, {Gupta}, {Gupta}, and
+  {Varma}]{Badjatiya}
+Pinkesh {Badjatiya}, Shashank {Gupta}, Manish {Gupta}, and Vasudeva {Varma}.
+\newblock {Deep Learning for Hate Speech Detection in Tweets}.
+\newblock \emph{arXiv e-prints}, art. arXiv:1706.00188, Jun 2017.
+
+\bibitem[{Pitsilis} et~al.(2018){Pitsilis}, {Ramampiaro}, and {Langseth}]{Pit}
+Georgios~K. {Pitsilis}, Heri {Ramampiaro}, and Helge {Langseth}.
+\newblock {Detecting Offensive Language in Tweets Using Deep Learning}.
+\newblock \emph{arXiv e-prints}, art. arXiv:1801.04433, Jan 2018.
+
+\bibitem[Breiman(2001)]{RF}
+Leo Breiman.
+\newblock Random forests.
+\newblock \emph{Mach. Learn.}, 45\penalty0 (1):\penalty0 5--32, October 2001.
+\newblock ISSN 0885-6125.
+\newblock \doi{10.1023/A:1010933404324}.
+\newblock URL \url{https://doi.org/10.1023/A:1010933404324}.
+
+\bibitem[LeCun et~al.(1998)LeCun, Bottou, Bengio, and Haffner]{CNN}
+Yann LeCun, L{\'{e}}on Bottou, Yoshua Bengio, and Patrick Haffner.
+\newblock Gradient-based learning applied to document recognition.
+\newblock In \emph{Proc. of IEEE}, 1998.
+
+\bibitem[{Jacovi} et~al.(2018){Jacovi}, {Sar Shalom}, and {Goldberg}]{Jacovi}
+Alon {Jacovi}, Oren {Sar Shalom}, and Yoav {Goldberg}.
+\newblock {Understanding Convolutional Neural Networks for Text
+  Classification}.
+\newblock \emph{arXiv e-prints}, art. arXiv:1809.08037, Sep 2018.
+
+\bibitem[PyTorch(2019)]{pytorch}
+PyTorch, 2019.
+\newblock URL \url{https://pytorch.org/}.
+
+\bibitem[{Mikolov} et~al.(2013){Mikolov}, {Chen}, {Corrado}, and
+  {Dean}]{Mikolov}
+T.~{Mikolov}, K.~{Chen}, G.~{Corrado}, and J.~{Dean}.
+\newblock {Efficient Estimation of Word Representations in Vector Space}.
+\newblock \emph{arXiv e-prints}, art. arXiv:1301.3781, Jan 2013.
+
+\bibitem[Kingma and Ba(2014)]{adam}
+Diederik~P. Kingma and Jimmy Ba.
+\newblock Adam: {A} method for stochastic optimization.
+\newblock \emph{CoRR}, abs/1412.6980, 2014.
+\newblock URL \url{http://arxiv.org/abs/1412.6980}.
+
+\bibitem[{Mikolov} et~al.(2010){Mikolov}, {Karafiat}, {Burget}, {Cernock}, and
+  {Khudanpur}]{model}
+T.~{Mikolov}, M.~{Karafiat}, L.~{Burget}, J.~{Cernock}, and S.~{Khudanpur}.
+\newblock Recurrent neural network based language model.
+\newblock In \emph{Proceedings of Interspeech}, 2010.
+
+\bibitem[Hochreiter and Schmidhuber(1997)]{lstm}
+Sepp Hochreiter and J\"{u}rgen Schmidhuber.
+\newblock Long short-term memory.
+\newblock \emph{Neural Comput.}, 9\penalty0 (8):\penalty0 1735--1780, November
+  1997.
+\newblock ISSN 0899-7667.
+\newblock \doi{10.1162/neco.1997.9.8.1735}.
+\newblock URL \url{http://dx.doi.org/10.1162/neco.1997.9.8.1735}.
 
 \end{thebibliography}
