@@ -29,7 +29,7 @@
 \newcommand\BibTeX{B{\sc ib}\TeX}
 
 %Title format for system description papers by task participants
-\title{Vigilante at SemEval-2019 Task 6:  How Far Can Models Overcome Data Imbalance}
+\title{Vigilante at SemEval-2019 Task 6 \\ How Far Can Models Overcome Data Imbalance}
 %Title format for task description papers by task organizers
 %\title{SemEval-2018 Task [TaskNumber]:  [Task Name]}
 
@@ -45,17 +45,15 @@
 \begin{document}
 \maketitle
 \begin{abstract}
-  Social media content generation is driven by the constant user growth. With this trend, the amount of hate speech is also increasing, making the necessity of automated methods for offensive language detection more proeminent.
-  This paper presents the empirical results on the OffensEval challenge on identifying and categorizing offensive language in social media. We present the approaches tried, the different architecture of the models and discuss the results obtained and challenges encountered in designing classifiers for this purpose.
+Social media content generation is driven by the constant user growth. With this trend, the amount of hate speech is also increasing, making the necessity of automated methods for offensive language detection more proeminent. This paper presents the empirical results on the OffensEval challenge on identifying and categorizing offensive language in social media. We present different approaches, the different architectures of the models and discuss the results obtained and challenges encountered in designing classifiers for this purpose.
 \end{abstract}
 
 \section{Introduction}
-
 With the emergence of social networking websites, the information posted and shared by users reaches a tremendous audience instantly. However, these websites and technologies have also enabled individuals to disseminate aggressive and harmful content as well, shielded by this layer of indirection. Finding a way to limit the generation and impact of offensive speech has attracted a lot of attention from the research community in recent years (Davidson et al., 2017; Malmasi and Zampieri, 2017). The amount of new data posted every day makes manual monitoring and moderation of content infeasible.
 
-In this paper, we present out findings on the SemEval-2019 Task 6: Identifying and Categorizing Offensive Language in Social Media. The competition required building classifiers for three different subtasks: offensive language Identification (Task A - binary classifier to detect offensive and acceptable language), automatic categorization of offense types (Task B - binary classifier to split the offensive content in Task A into targeted and untargeted) and offense target Identification (Task C - ternary classifier for targeted offensive language). The participants were provided with a dataset of 13200 labelled tweets to be used as training data.
+In this paper, we present out findings on the SemEval-2019 Task 6: Identifying and Categorizing Offensive Language in Social Media. The competition required building classifiers for three different subtasks: offensive language identification (Task A - binary classifier to detect offensive and acceptable language), automatic categorization of offense types (Task B - binary classifier to split the offensive content in Task A into targeted and untargeted) and offense target Identification (Task C - ternary classifier for targeted offensive language). The participants were provided with a dataset of 13200 labelled tweets to be used as training data.
 
-In Natural Language Processing (NLP), classical methods required manual feature engineering and used statistical algorithms to perform the majority of the tasks. The new wave of NLP models borrow ideas from deep learning to perform extraction of hierarchical features from the given data. For our submissions, we decided to use Random Forests as an algorithm representative for the first category, and Convolutional Neural Networks and LSTM for the deep learning approaches.
+In Natural Language Processing (NLP), classical methods required manual feature engineering and used statistical algorithms to perform the majority of the tasks. The new wave of NLP models borrow ideas from deep learning to perform extraction of hierarchical features from the given data. For our submissions, we decided to use Random Forests as an algorithm representative for the first category, and Convolutional Neural Networks (CNNs) and Long Short-Term Memory (LSTM) for the Deep Learning approaches.
 
 %Hate speech short intro
 %DL methods and references to papers backing up their success
@@ -65,26 +63,22 @@ In Natural Language Processing (NLP), classical methods required manual feature 
 
 %Discussion about the data and the datasets, no. of examples in each class
 
-The gievn dataset from the competition starting kit contains 13240 tweets: 4400 of them are marked as offensive and 8840 are not offensive. The offensive ones are further split for task B into 524 untargeted and 3876 targeted. Finally the targeted ones are divided for task C into: ...
+The given dataset from the competition starting kit contains 13240 tweets: 4400 of them are marked as offensive and 8840 are not offensive. The offensive ones are further split for task B into 524 untargeted and 3876 targeted. Finally the targeted ones are divided for task C into 2407 targeted on individuals (IND), 1074 targeted on groups (GRP) and 395 targeted on others (OTH).
 
-We have used the holdout method to split these tweets into a training set 8712 and a validation set comprising the remaining examples. 
+We have used the holdout method to split these tweets into a training set and a validation set with a ration of 75:25. However, after carefully reviewing different parameters and results, the final submissions, that achieved our best scores in the competition, were trained on the entire dataset. As a small test set we have parsed an additional file present in the starting kit to construct a dataset of 320 tweets.
 
-TODO: After we report the results of our validation experiments, we train the classifiers on the entire dataset before submission.
-
-As a small test set we have parsed an additional file present in the starting kit to construct a dataset of 320 tweets.
-
-We convert the tweets to lowercase, remove the following unnecessary space patterns and non-alphanumeric characters from the tweets, and remove the stopwords using the nltk Python package. After applying data augmentation, stemming or lemmatization (described in the subsections below), a vocabulary is built from the words in the training set. Each word in the sentences is then transformed into a number based on the index in this vocabulary. Then, each sentence is padded to the maximum length of all sentences by filling the vectors with the element 0 which represents the special <pad> symbol.
+We convert the tweets to lowercase, remove the following unnecessary space patterns, remove URLs [TODO:citation] and non-alphanumeric characters from the tweets, and remove the stopwords using the nltk Python package. After applying data augmentation, stemming or lemmatization (described in the subsections below), a vocabulary is built from the words in the training set. Each word in the sentences is then transformed into a number based on the index in this vocabulary. Then, each sentence is padded to the maximum length of all sentences by filling the vectors with the element 0 which represents the special <pad> symbol.
 
 \subsection{Data augmentation}
 
-From the above ratios, we see that the number of examples from each class are not comparable. While the issue is not so proeminent for the training dataset used for task A, this class imbalance might become problematic when investigating targeted offensive language. Therefore, we have decided to apply the following techniques for data augmentation:
+From the above ratios, we see that the ratios of examples from each class are not comparable. While the issue is not so proeminent for the training dataset used for task A, this class imbalance might become problematic when investigating targeted offensive language. Therefore, we have decided to apply the following techniques for data augmentation:
 \begin{itemize}
-    \item increasing the number of offensive sample by taking an offensive tweet and appending a random harmless tweet to create a new test instance
-    \item increasing the number of untargeted sample by taking an untargeted tweet and duplicating it as another test instance
-    \item Maybe augment for C?
+    \item increasing the number of offensive samples by taking an offensive tweet and appending a random harmless tweet to create a new train instance
+    \item increasing the number of untargeted samples by taking an untargeted tweet and duplicating it as another train instance
+    \item increasing the number of other samples by taking every such tweet and duplicating it as another train instance
 \end{itemize}
 
-TODO: explain augmentation after split - risk to have data in validation
+Note that this augmentation process is applied twice, after the training-validation split is run, on both training and validation sets. The reason for this is that we do not want to duplicate tweets and risk to have them in both the actual training and validation sets - otherwise, the validation loss computed at each epoch would not give us trully "unseen" examples.
 
 \subsection{Stemming}
 
@@ -92,30 +86,19 @@ We have also attempted word stemming for our tasks. Stemming can be defined as a
 
 \subsection{Lemmatization}
 
-While the goal of lemmatization is similar to the case of stemming, the latter method obtains the ‘stem’ of a word after applying a set of rules without taking into account the part of speech or the context of the word occurrence. Lemmatization obtains the base form of a word known as a ‘lemma’ of a word which involves
-reducing the word forms to its root form after doing a full morphological analysis of a sentence. While this technique may work in some application, it can hurt the performance of others. We have attempted this alternative pre-processing because stemming usually manages to increase recall while harming the precision of the classifiers, so a more informed decision to transform words may provide a better result. For this work, we have used a lemmatizer based on the WordNet lexical database of English words.
+While the goal of lemmatization is similar to the case of stemming, the latter method obtains the 'stem' of a word after applying a set of rules without taking into account the part of speech or the context of the word occurrence. Lemmatization obtains the base form of a word known as a 'lemma' of a word which involves reducing the word forms to its root form after doing a full morphological analysis of a sentence. While this technique may work in some application, it can hurt the performance of others. We have attempted this alternative pre-processing because stemming usually manages to increase recall while harming the precision of the classifiers, so a more informed decision to transform words may provide a better result. For this work, we have used a lemmatizer based on the WordNet lexical database of English words.
 
 \subsection{Slang}
 
+Considering the given datasets, the tweets that have been used might point to different informal expressions. An example of Internet slang is 'lol', which means 'laugh out loud', or AFAIK, meaning 'as far as I know'. Thus, this has been taken into account by using a Slang Dictionary, containing a list of 70 such expressions that are widely used - during the tweet parsing stage, the short-form slang is expanded to its original meaning.
+
 \section{Classifiers}
 
-Other work on hate speech in tweets (Badjatiya et al. (2017)) has been conducted using deep learning techniques. Our experiments use two of the methods proposed: Convolutional Neural Networks and Long short-term memory, comparing them against the general framework of Random Forests.
-WHAT?
-Moreover, they concluded that embeddings learned from
-deep neural network models when combined with gradient boosted decision trees led to best accuracy values, which significantly outperforms the
-existing methods.
-
-In this section we describe the classifiers tested, the framework used for the implementation and the hyperparameters that can be tuned for each approach.
+Other work on hate speech in tweets (Badjatiya et al. (2017)) has been conducted using deep learning techniques. Our experiments use two of the methods proposed: Convolutional Neural Networks and Long short-term memory, comparing them against the general framework of Random Forests. Moreover, they concluded that embeddings learned from Deep Neural Network models when combined with gradient boosted decision trees led to best accuracy values, which significantly outperforms the existing methods. In this section we describe the classifiers tested, the framework used for the implementation and the hyperparameters that can be tuned for each approach.
 
 \subsection{Random Forest}
 
-Random Decision Forests [] are an ensemble learning technique that constructs multiple decision trees using the training data and looks at the mode of the classes to decide the prediction when classifying new data.
-
-The parameters that can be modified are the number of estimators (i.e. the number of trees in the forest), the maximum depth of each tree (having a limit is a good technique for preventing overfitting) and the criterion for each spilt (a choice of either the entropy or gini measure).
-
-Using the RandomForestClassifier from the sklearn Python package, we have built random forests of 30 trees with a maximum depth of 80 nodes for each of the three tasks.
-
-How dafuq we have found the values?
+Random Decision Forests [] are an ensemble learning technique that constructs multiple decision trees using the training data and looks at the mode of the classes to decide the prediction when classifying new data. The parameters that can be modified are the number of estimators (i.e. the number of trees in the forest), the maximum depth of each tree (having a limit is a good technique for preventing overfitting) and the criterion for each spilt (a choice of either the entropy or gini measure). Using the RandomForestClassifier from the sklearn Python package, we have built random forests of 30 trees with a maximum depth of 80 nodes for each of the three tasks (the parameters have been chosen using grid search).
 
 \subsection{Convolutional Neural Network}
 
@@ -123,14 +106,11 @@ A Convolutional Neural Network (CNN) [] is a feed-forward neural network consist
 
 Our CNN is implemented using the PyTorch framework[]. Once the input vectors are built using the index of words in the known vocabulary, these will be used as input to our CNN. The first layer is an embedding layer that transforms each word into a continuous vector space of given dimension (Mikolov). Thus, the word embeddings will be contextualised and learned from the given examples. Next, the output of this embedding layer is fed into a convolutional layer, followed by a ReLU activation function, a max pooling layer and a dropout layer. At the end, a linear layer is applied to bring the result to either a single output value which will be transformed into a probability value for the binary classification task or a vector representing the corresponding outputs of all the classes (i.e. three classes for task C).
 
-The hyperparameters that can be modified are: the number of layers, the dimension of the convolution kernels, the dropout probability, the optimization algorithm and learning rate used.
-
-We have opted for a shallow network architecture because the tweets have a small maximum length, so the number of dimensions doesn't need to be reduced dramatically. By varying the window size from the text taken into account in our convolutional layer we found that ... yields the best results. The CNN was trained using the Adam optimizer [] to accelerate convergence during training with a learning rate of 0.0008 found using grid search.
+The hyperparameters that can be modified are: the number of layers, the dimension of the convolution kernels, the dropout probability, the optimization algorithm and learning rate used. We have opted for a shallow network architecture because the tweets have a small maximum length, so the number of dimensions does not need to be reduced dramatically. By varying the window size from the text taken into account in our convolutional layer we found that 1 yields the best results. The CNN was trained using the Adam optimizer [] to accelerate convergence during training with a learning rate of 0.0008 found using grid search.
 
 \subsection{Long-Short Term Memory}
 
-Recurrent Neural Networks (RNN) have been shown to produce very strong results for language modeling []. 
-They are suited for language tasks because they take into account the whole input sequence, storing the previous results in a hidden state within the nework architecture. Long-short term memory [] is a very popular type of RNNs, proposed to address the problem of vanishing and exploding gradients and make RNN training feasible.
+Recurrent Neural Networks (RNN) have been shown to produce very strong results for language modeling []. They are suited for language tasks because they take into account the whole input sequence, storing the previous results in a hidden state within the nework architecture. Long-short term memory [] is a very popular type of RNNs, proposed to address the problem of vanishing and exploding gradients and make RNN training feasible.
 
 \section{Results}
 
