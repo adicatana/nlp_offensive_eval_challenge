@@ -136,7 +136,7 @@ We have implemented an LSTM network in PyTorch, using an embedding layer, a laye
 
 \section{Results}
 
-Below we present our best runs for the algorithms at each individual task.
+This section presents the best runs for the models described in section 3, for each individual task.
 
 \subsection{Validation Experiments}
 
@@ -144,7 +144,7 @@ The results of our validation experiments are summarized per task in Tables \ref
 
 For task A, our CNN was trained for 100 epochs, while the LSTM had a tendency to diverge, so we report the best results computed at any point during training as we would have to apply early stopping to obtain a reasonable model.
 
-\begin{table*}[!htp]
+\begin{table*}[h!]
 \begin{center}
 \begin{tabular}{|c|cccc|}
 \hline \bf Task A & \bf baseline & \bf stemming & \bf lemmatization & \\ \hline
@@ -164,7 +164,7 @@ On the other hand, the CNN trained using stemming manages to produce the best re
 
 For task B, we have decided to reduce the number of training epochs to 80 since there were less examples remaining (only the subset of offensive tweets need further classification).
 
-\begin{table*}[!hbp]
+\begin{table*}[h!]
 \begin{center}
 \begin{tabular}{|c|cccc|}
 \hline \bf Task B & \bf baseline & \bf stemming & \bf lemmatization & \\ \hline
@@ -181,7 +181,7 @@ LSTM & bold & bold & bold & \\
 
 For task C, the performance of Random Forest was considerably inferior to the other techniques, so we are not including it in our comparison. One explanation for this could be the fact that such a classifier will make decisions based on individual words, treating all of them as independent. For a complicated task where multiple levels of the language and the context need to be taken into account, this independence assumption and local decision at each step leads to a limited generalization.
 
-\begin{table*}[!hbp]
+\begin{table*}[h!]
 \begin{center}
 \begin{tabular}{|c|cccc|}
 \hline \bf Task C & \bf baseline & \bf stemming & \bf lemmatization & \\ \hline
@@ -202,7 +202,7 @@ Using data augmentation for training our CNN, together with stemming, we have im
 
 \subsection{Submission Results}
 
-For the actual contest submission, we can view only the best result for each task. We report the best macro-averaged F1-score:
+For the actual contest submissions, we can view only the best result for each task. We report the best macro-averaged F1-score:
 
 \begin{enumerate}
     \item Task A: a result of \textbf{0.658273895} - this was obtained for the CNN trained on the full training dataset pre-processed using the common techniques from section 2 and stemming
@@ -217,6 +217,8 @@ The results show consistently that using stemming instead of no further processi
 Another point to note is that our vocabulary is built using the words that we see in the train corpus. This intrinsically assumes that they are representative for the words that will be included in the test set. If this does not hold, the method does not provide the best way to handle unseen words since these will simply be discarded and will not contribute to the classification. However, one should also investigate the possibility of obtaining better results if the whole English vocabulary or at least a bigger subset of it is used for obtained word indices, something we have not experimented with in our work.
 
 \section{Conclusion}
+
+In this paper we have summarized the approaches and methods used for building simple classifiers for offensive speech detection. We wanted to analyze how the class distribution over the dataset affects the generalization capabilities of our algorithms, and we have seen that this was not a problem up to a certain level of class imbalance, beyond which all the methods find that it is rewarding to stick to the majority class. Applying data augmentation techniques for the extreme cases of imbalance such as the samples for task B proved to be the only viable option. In general, the problem of obtaining accurate data that resembles the true underlying probability distribution is the challenging aspect of every deep learning method for natural language processing. 
 
 \bibliography{semeval2018}
 \bibliographystyle{unsrtnat}
