@@ -285,6 +285,19 @@ def read_csv(path):
     return rows
 
 #--------------------------- DATA AUGMENTATION --------------------------------
+def augment_others(corpus, labels, n):  
+    others = []
+    for idx, label in enumerate(labels):
+        if label == 2: 
+            others.append(corpus[idx])
+            
+    for i in range(n):
+        r = random.randint(0, len(others)) - 1      
+        corpus.append(others[r])
+        labels.append(2)
+
+    return corpus, labels
+
 def augment_untargeted(corpus, labels, n):
     untargeted = []
     for idx, label in enumerate(labels):
