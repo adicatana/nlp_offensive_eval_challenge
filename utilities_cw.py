@@ -60,11 +60,34 @@ def train_model(model, optimizer, loss_fn, feature_train, target_train, feature_
     print(np.count_nonzero(target_test))
 
 #--------------------------- ACCURACY -----------------------------------------
+def accuracy_task_c(output, target):
+    output = torch.nn.functional.log_softmax(output).max(dim = 1)[1]
+    correct = (output == target).float()
+    acc = correct.sum() / len(correct) 
+    return acc    
+
 def accuracy(output, target):
     output = torch.round(torch.sigmoid(output))
     correct = (output == target).float()
     acc = correct.sum() / len(correct) 
     return acc    
+
+def f_measure_task_c(output, gold):  
+    pred = torch.nn.functional.log_softmax(output).max(dim = 1)[1]
+    pred = pred.detach().cpu().numpy()
+
+    test_pos_preds = np.sum(pred)
+    test_pos_real = np.sum(gold)
+
+    true_positives = (np.logical_and(pred, gold)).astype(int)
+    true_positives = np.sum(true_positives)
+    print(true_positives)
+
+    precision = true_positives / test_pos_preds
+    recall = true_positives / test_pos_real
+
+    fscore = 2.0 * precision * recall / (precision + recall)
+    print("Test: Recall: %.2f, Precision: %.2f, F-measure: %.2f\n" % (recall, precision, fscore))  
 
 def f_measure(output, gold):  
     pred = torch.round(torch.sigmoid(output))
