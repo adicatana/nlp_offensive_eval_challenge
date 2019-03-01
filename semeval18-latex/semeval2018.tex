@@ -85,7 +85,7 @@ We convert all tweets to lowercase and remove the following elements as suggeste
     \item URLs present in the text
 \end{itemize}
 
-After applying data augmentation, stemming or lemmatization (described in the subsections below), a vocabulary is built from all the words in the training set. Each word in the sentences is then transformed into a number based on the index in this vocabulary. Then, each sentence is padded to the maximum length of all sentences by filling the vectors with the element 0 which represents the special padding symbol.
+After applying data augmentation, we had a choice of using stemming, lemmatization (described in the subsections below) or none. Then, a vocabulary is built from all the words in the training set. Each word in the sentences is transformed into a number based on the index in this vocabulary. Then, each sentence is padded to the maximum length of all sentences by filling the vectors with the element 0 which represents the special padding symbol.
 
 \subsection{Data augmentation}
 
@@ -142,9 +142,9 @@ Below we present our best runs for the algorithms at each individual task.
 
 The results of our validation experiments are summarized per task in Tables \ref{table:1}, \ref{table:2} and \ref{table:3}.
 
-Our CNN was trained for 100 epochs, while the LSTM had a tendency to diverge, so we report the best results during training as we would have to apply early stopping to obtain a reasonable model.
+For task A, our CNN was trained for 100 epochs, while the LSTM had a tendency to diverge, so we report the best results computed at any point during training as we would have to apply early stopping to obtain a reasonable model.
 
-\begin{table*}[!htb]
+\begin{table*}[!htp]
 \begin{center}
 \begin{tabular}{|c|cccc|}
 \hline \bf Task A & \bf baseline & \bf stemming & \bf lemmatization & \\ \hline
@@ -158,16 +158,13 @@ LSTM & bold & bold & bold & \\
 \label{table:1}
 \end{table*}
 
-RF results will predict only one label
-CNN with data augmentation, split, stemming:
- Epoch: 99 | Train Loss: 0.528 | Train Acc: 73.72\% | Val. Loss: 0.555 | Val. Acc: 71.25\% |
-| Test Loss: 0.583 | Test Acc: 67.19\%
-58
-Test: Recall: 0.75, Precision: 0.40, F1-measure: 0.52
+What we can observe is that the accuracy results for the Random Forest are not very far from the actual ratio between the training examples. This may indicate that because of the data imbalance, the model will tend to predict only one label, classifying all test instances as not offensive since this is the majority class.
 
-80 epochs
+On the other hand, the CNN trained using stemming manages to produce the best results in our validation experiments both in terms of accuracy and F1-measure. When we applied data augmentation for this task as explained in section 2.1, the F1-measure increased up to 0.52 at the expense of the test accuracy which dropped to a value of 67.19\% on the best run.
 
-\begin{table*}[!htb]
+For task B, we have decided to reduce the number of training epochs to 80 since there were less examples remaining (only the subset of offensive tweets need further classification).
+
+\begin{table*}[!hbp]
 \begin{center}
 \begin{tabular}{|c|cccc|}
 \hline \bf Task B & \bf baseline & \bf stemming & \bf lemmatization & \\ \hline
@@ -181,32 +178,43 @@ LSTM & bold & bold & bold & \\
 \label{table:2}
 \end{table*}
 
-\begin{table*}[!htb]
+
+For task C, the performance of Random Forest was considerably inferior to the other techniques, so we are not including it in our comparison. One explanation for this could be the fact that such a classifier will make decisions based on individual words, treating all of them as independent. For a complicated task where multiple levels of the language and the context need to be taken into account, this independence assumption and local decision at each step leads to a limited generalization.
+
+\begin{table*}[!hbp]
 \begin{center}
 \begin{tabular}{|c|cccc|}
 \hline \bf Task C & \bf baseline & \bf stemming & \bf lemmatization & \\ \hline
 CNN & \shortstack{Test Acc: 71.79\% \\ F1-measure: 0.12}  & \shortstack{Test Acc: 69.23\% \\ F1-measure: 0.11} & \shortstack{Test Acc: 69.23\% \\ F1-measure: 0.11} & \\ \hline
-LSTM & bold & \shortstack{Test Acc: 66.67\% \\ F1-measure: 0.37} & bold & \\
+LSTM & \shortstack{Test Acc: 66.67\% \\ F1-measure: 0.10} & \shortstack{Test Acc: 66.67\% \\ F1-measure: 0.37} & bold & \\
 \hline
 \end{tabular}
 \end{center}
-\caption{\label{font-table} Task C experimentation results. }
+\caption{\label{font-table} Task C experimentation results.}
 \label{table:3}
 \end{table*}
 
-Stemming, split, augment
-Test Acc: 71.79%
-Test: Recall: 0.14, Precision: 0.40, F-measure: 0.21
+Using data augmentation for training our CNN, together with stemming, we have improved the result up to a test accuracy of 71.79\% and F1-measure of 0.21, considerably better than any results on the original, unmodified dataset.
 
-Lemmatization, split, data augmentation
-Test Acc: 71.79%
-Test: Recall: 0.07, Precision: 0.25, F-measure: 0.11
+%Lemmatization, split, data augmentation
+%Test Acc: 71.79%
+%Test: Recall: 0.07, Precision: 0.25, F-measure: 0.11
 
 \subsection{Submission Results}
 
+For the actual contest submission, we can view only the best result for each task. We report the best macro-averaged F1-score:
+
+\begin{enumerate}
+    \item Task A: a result of \textbf{0.658273895} - this was obtained for the CNN trained on the full training dataset pre-processed using the common techniques from section 2 and stemming
+    \item Task B: a result of \textbf{0.648093842} - obtained again for the CNN, but trained on the \textbf{augmented} training dataset pre-processed using the common techniques from section 2 and stemming
+    \item Task C: a result of \textbf{0.400910364} - CNN obtained directly from the validation experiments without further tuning
+\end{enumerate}
+
 \subsection{Discussion and Interpretation}
 
-Better if we would have used the whole English vocabulary or a bigger subset of it for our word indices since we cannot be ceratin that words in the training set are representative for the test set as well, and this alternative approach would provide a better way of treating new, unseen words
+The results show consistently that using stemming instead of no further processing or lemmatization was a better choice for these tasks. This can be motivated by the fact that the language used may not be very complex or have many connotations. In that case, a simpler heuristic would yield reasonable results.
+
+Another point to note is that our vocabulary is built using the words that we see in the train corpus. This intrinsically assumes that they are representative for the words that will be included in the test set. If this does not hold, the method does not provide the best way to handle unseen words since these will simply be discarded and will not contribute to the classification. However, one should also investigate the possibility of obtaining better results if the whole English vocabulary or at least a bigger subset of it is used for obtained word indices, something we have not experimented with in our work.
 
 \section{Conclusion}
 

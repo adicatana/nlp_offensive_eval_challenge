@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2018.5.31)  1 MAR 2019 17:44
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2018.5.31)  1 MAR 2019 22:55
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -305,7 +305,12 @@ Underfull \hbox (badness 1158) in paragraph at lines 132--134
 \OT1/ptm/m/n/10.95 Recurrent Neu-ral Net-works (RNN) have been
  []
 
-[3] (./semeval2018.bbl
+[3]
+Underfull \hbox (badness 1038) in paragraph at lines 145--146
+[]\OT1/ptm/m/n/10.95 For task A, our CNN was trained for 100
+ []
+
+(./semeval2018.bbl
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <7> on input line 25.
 LaTeX Font Info:    External font `cmex10' loaded for size
@@ -315,7 +320,7 @@ Underfull \hbox (badness 4467) in paragraph at lines 34--37
 \OT1/ptm/m/n/10 Langseth.  De-tect-ing Of-fen-sive Lan-guage in
  []
 
-
+[4]
 Underfull \hbox (badness 1742) in paragraph at lines 52--56
 []\OT1/ptm/m/n/10 Alon Ja-covi, Oren Sar Shalom, and Yoav Gold-
  []
@@ -326,39 +331,41 @@ Underfull \hbox (badness 1297) in paragraph at lines 80--87
  []
 
 )
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 216.
- [4] [5]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 216.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 224.
+ [5
+
+] [6]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 224.
  (./semeval2018.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 216.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 216.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 224.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 224.
 Package rerunfilecheck Info: File `semeval2018.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
 
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 216.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 224.
  )
 (\end occurred when \iffalse on line 342 was incomplete) 
 Here is how much of TeX's memory you used:
- 5866 strings out of 494946
- 84188 string characters out of 6180981
- 176779 words of memory out of 5000000
+ 5870 strings out of 494946
+ 84212 string characters out of 6180981
+ 177779 words of memory out of 5000000
  9084 multiletter control sequences out of 15000+600000
  21954 words of font info for 55 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 36i,12n,37p,872b,345s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 36i,12n,37p,872b,441s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/tex
 mf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texlive/texmf-dist/fonts/type1/
 public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/co
 urier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pf
 b></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/t
 exlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on semeval2018.pdf (5 pages, 83839 bytes).
+Output written on semeval2018.pdf (6 pages, 86843 bytes).
 PDF statistics:
- 137 PDF objects out of 1000 (max. 8388607)
- 123 compressed objects within 2 object streams
- 38 named destinations out of 1000 (max. 500000)
+ 144 PDF objects out of 1000 (max. 8388607)
+ 129 compressed objects within 2 object streams
+ 42 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
