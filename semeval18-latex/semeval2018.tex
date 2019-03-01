@@ -38,14 +38,17 @@
   {\tt ib2215@ic.ac.uk} \\\And
   Adrian Catan\u{a} \\
   Imperial College London \\
-  {\tt ac5915@ic.ac.uk} \\}
+  {\tt ac7815@ic.ac.uk} \\}
 
 \date{}
 
 \begin{document}
 \maketitle
 \begin{abstract}
-Social media content generation is driven by the constant user growth. With this trend, the amount of hate speech is also increasing, making the necessity of automated methods for offensive language detection more proeminent. This paper presents the empirical results on the OffensEval challenge on identifying and categorizing offensive language in social media. We present different approaches, the different architectures of the models and discuss the results obtained and challenges encountered in designing classifiers for this purpose.
+
+  Social media content generation is driven by the constant user growth. With this trend, the amount of hate speech is also increasing, making the necessity of automated methods for offensive language detection more proeminent.
+  This paper presents our empirical results for the OffensEval challenge on identifying and categorizing offensive language in social media. We present different approaches, the different architectures of the models and discuss the results obtained and challenges encountered in designing classifiers for this purpose.
+
 \end{abstract}
 
 \section{Introduction}
@@ -63,11 +66,24 @@ In Natural Language Processing (NLP), classical methods required manual feature 
 
 %Discussion about the data and the datasets, no. of examples in each class
 
+
 The given dataset from the competition starting kit contains 13240 tweets: 4400 of them are marked as offensive and 8840 are not offensive. The offensive ones are further split for task B into 524 untargeted and 3876 targeted. Finally the targeted ones are divided for task C into 2407 targeted on individuals (IND), 1074 targeted on groups (GRP) and 395 targeted on others (OTH).
 
 We have used the holdout method to split these tweets into a training set and a validation set with a ration of 75:25. However, after carefully reviewing different parameters and results, the final submissions, that achieved our best scores in the competition, were trained on the entire dataset. As a small test set we have parsed an additional file present in the starting kit to construct a dataset of 320 tweets.
 
-We convert the tweets to lowercase, remove the following unnecessary space patterns, remove URLs [TODO:citation] and non-alphanumeric characters from the tweets, and remove the stopwords using the nltk Python package. After applying data augmentation, stemming or lemmatization (described in the subsections below), a vocabulary is built from the words in the training set. Each word in the sentences is then transformed into a number based on the index in this vocabulary. Then, each sentence is padded to the maximum length of all sentences by filling the vectors with the element 0 which represents the special <pad> symbol.
+After we report the results of our validation experiments, we train the classifiers on the entire dataset before submission.
+
+As a small test set we have parsed an additional file present in the competition starting kit to construct a dataset of 320 tweets.
+
+We convert all tweets to lowercase and remove the following elements as suggested in [TODO:citation]:
+\begin{itemize}
+    \item unnecessary space patterns
+    \item non-alphanumeric characters from the tweets
+    \item remove the stopwords using the nltk Python package
+    \item URLs present in the text
+\end{itemize}
+
+After applying data augmentation, stemming or lemmatization (described in the subsections below), a vocabulary is built from all the words in the training set. Each word in the sentences is then transformed into a number based on the index in this vocabulary. Then, each sentence is padded to the maximum length of all sentences by filling the vectors with the element 0 which represents the special padding symbol.
 
 \subsection{Data augmentation}
 
@@ -94,23 +110,27 @@ Considering the given datasets, the tweets that have been used might point to di
 
 \section{Classifiers}
 
-Other work on hate speech in tweets (Badjatiya et al. (2017)) has been conducted using deep learning techniques. Our experiments use two of the methods proposed: Convolutional Neural Networks and Long short-term memory, comparing them against the general framework of Random Forests. Moreover, they concluded that embeddings learned from Deep Neural Network models when combined with gradient boosted decision trees led to best accuracy values, which significantly outperforms the existing methods. In this section we describe the classifiers tested, the framework used for the implementation and the hyperparameters that can be tuned for each approach.
+Other work on hate speech in tweets [Badjatiya et al. (2017)] has been conducted using deep learning techniques. Our experiments use two of the methods proposed: Convolutional Neural Networks and Long short-term memory, comparing them against the general framework of Random Forests. Moreover, they concluded that embeddings learned from Deep Neural Network models when combined with gradient boosted decision trees led to best accuracy values, which significantly outperforms the existing methods. In this section we describe the classifiers tested, the framework used for the implementation and the hyperparameters that can be tuned for each approach.
 
 \subsection{Random Forest}
 
-Random Decision Forests [] are an ensemble learning technique that constructs multiple decision trees using the training data and looks at the mode of the classes to decide the prediction when classifying new data. The parameters that can be modified are the number of estimators (i.e. the number of trees in the forest), the maximum depth of each tree (having a limit is a good technique for preventing overfitting) and the criterion for each spilt (a choice of either the entropy or gini measure). Using the RandomForestClassifier from the sklearn Python package, we have built random forests of 30 trees with a maximum depth of 80 nodes for each of the three tasks (the parameters have been chosen using grid search).
+Random Decision Forests \cite{RF} are an ensemble learning technique that constructs multiple decision trees using the training data and looks at the mode of the classes to decide the prediction when classifying new data. The parameters that can be modified are the number of estimators (i.e. the number of trees in the forest), the maximum depth of each tree (having a limit is a good technique for preventing overfitting) and the criterion for each spilt (a choice of either the entropy or gini measure). Using the RandomForestClassifier from the sklearn Python package, we have built random forests of 30 trees with a maximum depth of 80 nodes for each of the three tasks (the parameters have been chosen using grid search).
+
 
 \subsection{Convolutional Neural Network}
 
 A Convolutional Neural Network (CNN) [] is a feed-forward neural network consisting of the typical input and output layers, but with the hidden layers having additional types: convolution and pooling. The idea of the convolutional layers is to enable the network to automatically identify and extract features from the input space, while pooling layers can be introduced to reduce the dimentionality of the problem space. CNNs are mostly used in applications such as image and sound recognition, but they can be suited to particular NLP tasks as well. The intuition is that convolutional filters can correspond to several different semantic patterns [Jacovi, 2018] and thus, in our context of offensive language classification, CNNs can extract particular word combinations.
 
-Our CNN is implemented using the PyTorch framework[]. Once the input vectors are built using the index of words in the known vocabulary, these will be used as input to our CNN. The first layer is an embedding layer that transforms each word into a continuous vector space of given dimension (Mikolov). Thus, the word embeddings will be contextualised and learned from the given examples. Next, the output of this embedding layer is fed into a convolutional layer, followed by a ReLU activation function, a max pooling layer and a dropout layer. At the end, a linear layer is applied to bring the result to either a single output value which will be transformed into a probability value for the binary classification task or a vector representing the corresponding outputs of all the classes (i.e. three classes for task C).
+Our CNN is implemented using the PyTorch framework \cite{pytorch}. Once the input vectors are built using the index of words in the known vocabulary, these will be used as input to our CNN. The first layer is an embedding layer that transforms each word into a continuous vector space of given dimension (Mikolov). Thus, the word embeddings will be contextualised and learned from the given examples. Next, the output of this embedding layer is fed into a convolutional layer, followed by a ReLU activation function, a max pooling layer and a dropout layer. At the end, a linear layer is applied to bring the result to either a single output value which will be transformed into a probability value for the binary classification task or a vector representing the corresponding outputs of all the classes (i.e. three classes for task C).
 
-The hyperparameters that can be modified are: the number of layers, the dimension of the convolution kernels, the dropout probability, the optimization algorithm and learning rate used. We have opted for a shallow network architecture because the tweets have a small maximum length, so the number of dimensions does not need to be reduced dramatically. By varying the window size from the text taken into account in our convolutional layer we found that 1 yields the best results. The CNN was trained using the Adam optimizer [] to accelerate convergence during training with a learning rate of 0.0008 found using grid search.
+The hyperparameters that can be modified are: the number of layers, the dimension of the convolution kernels, the dropout probability, the optimization algorithm and learning rate used. We have opted for a shallow network architecture because the tweets have a small maximum length, so the number of dimensions does not need to be reduced dramatically. By varying the window size from the text taken into account in our convolutional layer we found that 1 yields the best results. The CNN was trained using the Adam optimizer \cite{adam} to accelerate convergence during training with a learning rate of 0.0008 found using grid search.
 
 \subsection{Long-Short Term Memory}
 
-Recurrent Neural Networks (RNN) have been shown to produce very strong results for language modeling []. They are suited for language tasks because they take into account the whole input sequence, storing the previous results in a hidden state within the nework architecture. Long-short term memory [] is a very popular type of RNNs, proposed to address the problem of vanishing and exploding gradients and make RNN training feasible.
+Recurrent Neural Networks (RNN) have been shown to produce very strong results for language modeling []. 
+They are suited for language tasks because they take into account the whole input sequence, storing the previous results in a hidden state within the nework architecture. Long-short term memory \cite{lstm} is a very popular type of RNNs, proposed to address the problem of vanishing and exploding gradients and make RNN training feasible.
+
+We have opted for a unidirectional LSTM architecture again because of the small maximum length of he tweets, coupled with the small number of training examples for a network with so many learnable parameters. The LSTM was trained using the same parameters for the optimization procedure as our CNN: Adam optimizer with the same learning rate.
 
 \section{Results}
 
@@ -182,5 +202,8 @@ Test: Recall: 0.07, Precision: 0.25, F-measure: 0.11
 Better if we would have used the whole English vocabulary or a bigger subset of it for our word indices since we cannot be ceratin that words in the training set are representative for the test set as well, and this alternative approach would provide a better way of treating new, unseen words
 
 \section{Conclusion}
+
+\bibliography{semeval2018}
+\bibliographystyle{ieeetr}
 
 \end{document}

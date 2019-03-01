@@ -1,0 +1,46 @@
+This is BibTeX, Version 0.99d (TeX Live 2016)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: semeval2018.aux
+The style file: ieeetr.bst
+Database file #1: semeval2018.bib
+You've used 4 entries,
+            1876 wiz_defined-function locations,
+            506 strings with 3822 characters,
+and the built_in function-call counts, 871 in all, are:
+= -- 89
+> -- 21
+< -- 0
++ -- 9
+- -- 5
+* -- 58
+:= -- 123
+add.period$ -- 3
+call.type$ -- 4
+change.case$ -- 4
+chr.to.int$ -- 0
+cite$ -- 4
+duplicate$ -- 43
+empty$ -- 90
+format.name$ -- 5
+if$ -- 212
+int.to.chr$ -- 0
+int.to.str$ -- 4
+missing$ -- 3
+newline$ -- 15
+num.names$ -- 3
+pop$ -- 11
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 0
+skip$ -- 38
+stack$ -- 0
+substring$ -- 59
+swap$ -- 17
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 0
+warning$ -- 0
+while$ -- 9
+width$ -- 5
+write$ -- 36
